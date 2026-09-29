@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Criar conta — GDF</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+
+<div class="auth-page">
+  <aside class="auth-side">
+    <div class="brand">
+      <span class="brand-mark">GDF</span>
+      <span>
+        <span class="brand-name">GDF</span>
+        <span class="brand-sub">Gestão Digital Funcional</span>
+      </span>
+    </div>
+
+    <div class="auth-quote">
+      <h2>Crie sua conta e comece a acompanhar seus serviços agora mesmo.</h2>
+      <p>Leva menos de um minuto. Depois é só aguardar a equipe GDF registrar o andamento do seu serviço.</p>
+    </div>
+
+    <div class="auth-demo">
+      <strong>Já tem uma conta?</strong>
+      <p style="margin:0; color:rgba(255,255,255,.78);">Use a tela de login para acessar seu painel de cliente, funcionário ou administrador.</p>
+    </div>
+  </aside>
+
+  <main class="auth-main">
+    <div class="auth-card">
+      <a href="index.html" class="back-link">← Voltar ao início</a>
+      <h1>Criar minha conta</h1>
+      <p>Preencha seus dados para começar a acompanhar seus serviços com a GDF.</p>
+
+      <form id="form-cadastro" novalidate>
+        <div class="field" id="campo-nome">
+          <label for="nome">Nome completo</label>
+          <input class="input" type="text" id="nome" name="nome" placeholder="Seu nome completo" required>
+          <div class="error-msg">Informe seu nome completo.</div>
+        </div>
+
+        <div class="field" id="campo-email">
+          <label for="email">E-mail</label>
+          <input class="input" type="email" id="email" name="email" placeholder="voce@seudominio.com" required>
+          <div class="error-msg">Informe um e-mail válido.</div>
+        </div>
+
+        <div class="input-row">
+          <div class="field" id="campo-telefone">
+            <label for="telefone">Telefone</label>
+            <input class="input" type="tel" id="telefone" name="telefone" placeholder="(00) 00000-0000" required>
+            <div class="error-msg">Informe um telefone válido.</div>
+          </div>
+          <div class="field" id="campo-documento">
+            <label for="documento">CPF</label>
+            <input class="input" type="text" id="documento" name="documento" placeholder="000.000.000-00" required>
+            <div class="error-msg">Informe um CPF válido.</div>
+          </div>
+        </div>
+
+        <div class="field" id="campo-senha">
+          <label for="senha">Senha</label>
+          <div class="password-field">
+            <input class="input" type="password" id="senha" name="senha" placeholder="Mínimo de 6 caracteres" required>
+            <button type="button" class="toggle-pass" data-toggle-target="senha">MOSTRAR</button>
+          </div>
+          <div class="hint">Use pelo menos 6 caracteres.</div>
+          <div class="error-msg">A senha deve ter pelo menos 6 caracteres.</div>
+        </div>
+
+        <div class="field" id="campo-confirmar">
+          <label for="confirmarSenha">Confirmar senha</label>
+          <div class="password-field">
+            <input class="input" type="password" id="confirmarSenha" name="confirmarSenha" placeholder="Repita sua senha" required>
+            <button type="button" class="toggle-pass" data-toggle-target="confirmarSenha">MOSTRAR</button>
+          </div>
+          <div class="error-msg">As senhas não coincidem.</div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Criar minha conta</button>
+      </form>
+
+      <p class="auth-foot">Já possui uma conta? <a href="login.html">Fazer login</a></p>
+    </div>
+  </main>
+</div>
+
+<script src="js/auth.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const sessaoAtual = getSessao();
+    if (sessaoAtual) {
+      window.location.href = REDIRECT_POR_TIPO[sessaoAtual.tipo] || 'login.html';
+      return;
+    }
+
+    $all('.toggle-pass').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const input = $('#' + btn.getAttribute('data-toggle-target'));
+        const mostrando = input.type === 'text';
+        input.type = mostrando ? 'password' : 'text';
+        btn.textContent = mostrando ? 'MOSTRAR' : 'OCULTAR';
+      });
+    });
+
+    const campos = ['nome', 'email', 'telefone', 'documento', 'senha', 'confirmar'];
+
+    $('#form-cadastro').addEventListener('submit', (e) => {
+      e.preventDefault();
+      campos.forEach(c => $('#campo-' + c).classList.remove('has-error'));
+
+      const dados = {
+        nome: $('#nome').value,
+        email: $('#email').value,
+        telefone: $('#telefone').value,
+        documento: $('#documento').value,
+        senha: $('#senha').value,
+        confirmarSenha: $('#confirmarSenha').value
+      };
+
+      const resultado = cadastrarCliente(dados);
+
+      if (!resultado.sucesso) {
+        const mapaCampo = { nome: 'nome', email: 'email', telefone: 'telefone', documento: 'documento', senha: 'senha', confirmarSenha: 'confirmar' };
+        const campoId = mapaCampo[resultado.campo];
+        if (campoId) $('#campo-' + campoId).classList.add('has-error');
+        mostrarToast(resultado.mensagem, 'error');
+        return;
+      }
+
+      mostrarToast('Conta criada com sucesso!', 'success');
+      setTimeout(() => { window.location.href = 'login.html'; }, 900);
+    });
+  });
+</script>
+</body>
+</html>

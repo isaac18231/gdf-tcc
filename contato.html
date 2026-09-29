@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contato — GDF</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/login.css">
+<link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="brand">
+      <span class="brand-mark">GDF</span>
+      <span>
+        <span class="brand-name">GDF</span>
+        <span class="brand-sub">Gestão Digital Funcional</span>
+      </span>
+    </a>
+
+    <nav class="main-nav" id="main-nav">
+      <a href="index.html">Home</a>
+      <a href="quem-somos.html">Quem somos</a>
+      <a href="portfolio.html">Portfólio</a>
+      <a href="contato.html">Contato</a>
+    </nav>
+
+    <div class="header-actions">
+      <a href="login.html" class="btn btn-ghost" data-auth-link>Entrar</a>
+      <a href="cadastro.html" class="btn btn-primary">Criar conta</a>
+      <button class="nav-toggle" aria-label="Abrir menu"><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="page-hero">
+    <div class="container">
+      <span class="eyebrow-tag">Fale conosco</span>
+      <h1>Vamos conversar sobre o seu próximo serviço.</h1>
+      <p>Tire dúvidas, peça um orçamento ou entenda melhor como funciona o acompanhamento pela plataforma GDF.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container contact-grid">
+      <div>
+        <div class="contact-info-card">
+          <span class="ci-ico">@</span>
+          <div>
+            <h4>E-mail</h4>
+            <p>contato@gdf.com</p>
+          </div>
+        </div>
+        <div class="contact-info-card">
+          <span class="ci-ico">#</span>
+          <div>
+            <h4>Telefone / WhatsApp</h4>
+            <p>(21) 90000-0000</p>
+          </div>
+        </div>
+        <div class="contact-info-card">
+          <span class="ci-ico">•</span>
+          <div>
+            <h4>Atendimento</h4>
+            <p>Segunda a sexta, das 9h às 18h</p>
+          </div>
+        </div>
+        <div class="contact-info-card">
+          <span class="ci-ico">?</span>
+          <div>
+            <h4>Já é cliente?</h4>
+            <p>Acesse seu painel para ver o andamento do seu serviço a qualquer momento.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form-panel">
+        <h2>Envie uma mensagem</h2>
+        <p style="margin-bottom:24px;">Responderemos o quanto antes pelo e-mail informado.</p>
+
+        <form id="form-contato" novalidate>
+          <div class="input-row">
+            <div class="field" id="campo-nome">
+              <label for="nome">Nome</label>
+              <input class="input" type="text" id="nome" placeholder="Seu nome" required>
+              <div class="error-msg">Informe seu nome.</div>
+            </div>
+            <div class="field" id="campo-email">
+              <label for="email">E-mail</label>
+              <input class="input" type="email" id="email" placeholder="voce@seudominio.com" required>
+              <div class="error-msg">Informe um e-mail válido.</div>
+            </div>
+          </div>
+
+          <div class="field" id="campo-assunto">
+            <label for="assunto">Assunto</label>
+            <input class="input" type="text" id="assunto" placeholder="Sobre o que você quer falar?" required>
+            <div class="error-msg">Informe o assunto.</div>
+          </div>
+
+          <div class="field" id="campo-mensagem">
+            <label for="mensagem">Mensagem</label>
+            <textarea class="input" id="mensagem" rows="5" placeholder="Escreva sua mensagem..." required></textarea>
+            <div class="error-msg">Escreva sua mensagem.</div>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">Enviar mensagem</button>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand">
+          <span class="brand-mark">GDF</span>
+          <span>
+            <span class="brand-name">GDF</span>
+            <span class="brand-sub">Gestão Digital Funcional</span>
+          </span>
+        </div>
+        <p>Gestão digital simples, funcional e transparente para clientes e equipes.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navegação</h4>
+        <a href="index.html">Home</a>
+        <a href="quem-somos.html">Quem somos</a>
+        <a href="portfolio.html">Portfólio</a>
+        <a href="contato.html">Contato</a>
+      </div>
+      <div class="footer-col">
+        <h4>Acesso</h4>
+        <a href="login.html">Entrar</a>
+        <a href="cadastro.html">Criar conta</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contato</h4>
+        <a href="mailto:contato@gdf.com">contato@gdf.com</a>
+        <a href="contato.html">Fale conosco</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="ano-atual"></span> GDF — Gestão Digital Funcional. Todos os direitos reservados.</span>
+      <span>Feito com dedicação para uma gestão mais transparente.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/auth.js"></script>
+<script src="js/script.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const campos = ['nome', 'email', 'assunto', 'mensagem'];
+    $('#form-contato').addEventListener('submit', (e) => {
+      e.preventDefault();
+      campos.forEach(c => $('#campo-' + c).classList.remove('has-error'));
+
+      const nome = $('#nome').value.trim();
+      const email = $('#email').value.trim();
+      const assunto = $('#assunto').value.trim();
+      const mensagem = $('#mensagem').value.trim();
+
+      let valido = true;
+      if (nome.length < 2) { $('#campo-nome').classList.add('has-error'); valido = false; }
+      if (!validarEmail(email)) { $('#campo-email').classList.add('has-error'); valido = false; }
+      if (!assunto) { $('#campo-assunto').classList.add('has-error'); valido = false; }
+      if (!mensagem) { $('#campo-mensagem').classList.add('has-error'); valido = false; }
+      if (!valido) return;
+
+      mostrarToast('Mensagem enviada com sucesso! Em breve entraremos em contato.', 'success');
+      e.target.reset();
+    });
+  });
+</script>
+</body>
+</html>

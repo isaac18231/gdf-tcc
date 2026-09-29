@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meu painel — GDF</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+<div class="sidebar-backdrop"></div>
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-mark">GDF</span>
+      <span>
+        <span class="brand-name">GDF</span>
+        <span class="brand-sub">Gestão Digital Funcional</span>
+      </span>
+    </div>
+
+    <div class="side-user">
+      <span class="avatar" id="side-avatar">C</span>
+      <div>
+        <div class="u-name" id="side-nome">—</div>
+        <div class="u-role">Cliente</div>
+      </div>
+    </div>
+
+    <nav class="side-nav">
+      <a href="cliente.html" class="active"><span class="ico">■</span> Dashboard</a>
+      <a href="#servicos-section"><span class="ico">□</span> Meus serviços</a>
+    </nav>
+
+    <div class="side-logout">
+      <button data-logout><span class="ico">←</span> Sair</button>
+    </div>
+  </aside>
+
+  <main class="dash-main">
+    <div class="dash-topbar">
+      <button class="mobile-menu-btn" aria-label="Abrir menu">☰</button>
+      <div>
+        <h1 id="titulo-boas-vindas">Olá!</h1>
+        <div class="sub">Confira abaixo o andamento dos seus serviços.</div>
+      </div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-label">Serviços ativos</div>
+        <div class="stat-value" id="stat-ativos">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Concluídos</div>
+        <div class="stat-value" id="stat-concluidos">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Aguardando</div>
+        <div class="stat-value" id="stat-aguardando">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Última atualização</div>
+        <div class="stat-value" style="font-size:1rem;" id="stat-ultima">—</div>
+      </div>
+    </div>
+
+    <div class="panel" id="servicos-section">
+      <div class="panel-head">
+        <h3>Meus serviços</h3>
+        <div class="toolbar">
+          <div class="search-box"><input type="text" id="busca-servico" placeholder="Buscar serviço..."></div>
+          <select class="filter-select" id="filtro-status">
+            <option value="">Todos os status</option>
+            <option value="aguardando">Aguardando</option>
+            <option value="recebido">Recebido</option>
+            <option value="em_analise">Em análise</option>
+            <option value="em_desenvolvimento">Em desenvolvimento</option>
+            <option value="em_revisao">Em revisão</option>
+            <option value="concluido">Concluído</option>
+            <option value="cancelado">Cancelado</option>
+          </select>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="service-grid" id="lista-servicos"></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- modal de detalhes do serviço -->
+<div class="modal-overlay" id="modal-detalhes">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3 id="detalhe-titulo">Serviço</h3>
+      <button class="modal-close" id="fechar-modal-detalhes">✕</button>
+    </div>
+    <div class="modal-body">
+      <p id="detalhe-descricao" style="margin-bottom:20px;"></p>
+      <h4 style="font-size:.85rem; margin-bottom:14px;">Progresso</h4>
+      <div id="detalhe-progresso" style="margin-bottom:26px;"></div>
+      <h4 style="font-size:.85rem; margin-bottom:14px;">Histórico de atualizações</h4>
+      <div id="detalhe-timeline"></div>
+    </div>
+  </div>
+</div>
+
+<script src="js/auth.js"></script>
+<script src="js/cliente.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+      if (usuarioAtual) $('#titulo-boas-vindas').textContent = 'Olá, ' + usuarioAtual.nome.split(' ')[0] + '!';
+    }, 0);
+  });
+</script>
+</body>
+</html>

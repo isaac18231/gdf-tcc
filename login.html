@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entrar — GDF</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+
+<div class="auth-page">
+  <aside class="auth-side">
+    <div class="brand">
+      <span class="brand-mark">GDF</span>
+      <span>
+        <span class="brand-name">GDF</span>
+        <span class="brand-sub">Gestão Digital Funcional</span>
+      </span>
+    </div>
+
+    <div class="auth-quote">
+      <h2>Acompanhe seus serviços com clareza, do início à entrega.</h2>
+      <p>Faça login para ver o andamento atualizado de tudo o que está sob responsabilidade da equipe GDF.</p>
+    </div>
+
+    <div class="auth-demo">
+      <strong>Contas de demonstração</strong>
+      <ul>
+        <li data-demo-email="cliente@gdf.com" data-demo-senha="cliente123" style="cursor:pointer;">Cliente — <code>cliente@gdf.com</code> / <code>cliente123</code></li>
+        <li data-demo-email="funcionario@gdf.com" data-demo-senha="funcionario123" style="cursor:pointer;">Funcionário — <code>funcionario@gdf.com</code> / <code>funcionario123</code></li>
+        <li data-demo-email="admin@gdf.com" data-demo-senha="admin123" style="cursor:pointer;">Administrador — <code>admin@gdf.com</code> / <code>admin123</code></li>
+      </ul>
+      <p style="margin:10px 0 0; font-size:.74rem; color:rgba(255,255,255,.6);">Clique em uma conta para preencher o formulário.</p>
+    </div>
+  </aside>
+
+  <main class="auth-main">
+    <div class="auth-card">
+      <a href="index.html" class="back-link">← Voltar ao início</a>
+      <h1>Entrar na sua conta</h1>
+      <p>Informe seu e-mail e senha para acessar o seu painel.</p>
+
+      <form id="form-login" novalidate>
+        <div class="field" id="campo-email">
+          <label for="email">E-mail</label>
+          <input class="input" type="email" id="email" name="email" placeholder="voce@seudominio.com" required>
+          <div class="error-msg">Informe um e-mail válido.</div>
+        </div>
+
+        <div class="field" id="campo-senha">
+          <label for="senha">Senha</label>
+          <div class="password-field">
+            <input class="input" type="password" id="senha" name="senha" placeholder="Sua senha" required>
+            <button type="button" class="toggle-pass" id="toggle-senha">MOSTRAR</button>
+          </div>
+          <div class="error-msg">Informe sua senha.</div>
+        </div>
+
+        <div class="field-row-between">
+          <span></span>
+          <a href="#" id="link-esqueci">Esqueci minha senha</a>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Entrar</button>
+      </form>
+
+      <p class="auth-foot">Ainda não possui uma conta? <a href="cadastro.html">Cadastre-se</a></p>
+    </div>
+  </main>
+</div>
+
+<script src="js/auth.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // se já estiver logado, manda direto para o painel
+    const sessaoAtual = getSessao();
+    if (sessaoAtual) {
+      window.location.href = REDIRECT_POR_TIPO[sessaoAtual.tipo] || 'login.html';
+      return;
+    }
+
+    const form = $('#form-login');
+    const campoEmail = $('#campo-email');
+    const campoSenha = $('#campo-senha');
+
+    $('#toggle-senha').addEventListener('click', () => {
+      const input = $('#senha');
+      const mostrando = input.type === 'text';
+      input.type = mostrando ? 'password' : 'text';
+      $('#toggle-senha').textContent = mostrando ? 'MOSTRAR' : 'OCULTAR';
+    });
+
+    $('#link-esqueci').addEventListener('click', (e) => {
+      e.preventDefault();
+      mostrarToast('Entre em contato com a equipe GDF para redefinir sua senha.', 'info');
+    });
+
+    $all('[data-demo-email]').forEach(item => {
+      item.addEventListener('click', () => {
+        $('#email').value = item.getAttribute('data-demo-email');
+        $('#senha').value = item.getAttribute('data-demo-senha');
+        campoEmail.classList.remove('has-error');
+        campoSenha.classList.remove('has-error');
+        mostrarToast('Dados preenchidos. Clique em Entrar.', 'info');
+      });
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      campoEmail.classList.remove('has-error');
+      campoSenha.classList.remove('has-error');
+
+      const email = $('#email').value.trim();
+      const senha = $('#senha').value;
+
+      if (!validarEmail(email)) { campoEmail.classList.add('has-error'); return; }
+      if (!senha) { campoSenha.classList.add('has-error'); return; }
+
+      const resultado = login(email, senha);
+      if (!resultado.sucesso) {
+        mostrarToast(resultado.mensagem, 'error');
+        campoSenha.classList.add('has-error');
+        return;
+      }
+
+      mostrarToast('Login realizado com sucesso!', 'success');
+      setTimeout(() => {
+        window.location.href = REDIRECT_POR_TIPO[resultado.usuario.tipo] || 'index.html';
+      }, 500);
+    });
+  });
+</script>
+</body>
+</html>

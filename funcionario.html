@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel do funcionário — GDF</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+<div class="sidebar-backdrop"></div>
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-mark">GDF</span>
+      <span>
+        <span class="brand-name">GDF</span>
+        <span class="brand-sub">Gestão Digital Funcional</span>
+      </span>
+    </div>
+
+    <div class="side-user">
+      <span class="avatar" id="side-avatar">F</span>
+      <div>
+        <div class="u-name" id="side-nome">—</div>
+        <div class="u-role">Funcionário</div>
+      </div>
+    </div>
+
+    <nav class="side-nav">
+      <a href="funcionario.html" class="active"><span class="ico">■</span> Serviços</a>
+    </nav>
+
+    <div class="side-logout">
+      <button data-logout><span class="ico">←</span> Sair</button>
+    </div>
+  </aside>
+
+  <main class="dash-main">
+    <div class="dash-topbar">
+      <button class="mobile-menu-btn" aria-label="Abrir menu">☰</button>
+      <div>
+        <h1>Serviços em andamento</h1>
+        <div class="sub">Atualize o status e registre observações para os clientes acompanharem.</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <h3>Todos os serviços</h3>
+        <div class="toolbar">
+          <div class="search-box"><input type="text" id="busca-servico" placeholder="Buscar cliente ou serviço..."></div>
+          <select class="filter-select" id="filtro-status">
+            <option value="">Todos os status</option>
+            <option value="aguardando">Aguardando</option>
+            <option value="recebido">Recebido</option>
+            <option value="em_analise">Em análise</option>
+            <option value="em_desenvolvimento">Em desenvolvimento</option>
+            <option value="em_revisao">Em revisão</option>
+            <option value="concluido">Concluído</option>
+            <option value="cancelado">Cancelado</option>
+          </select>
+        </div>
+      </div>
+      <div class="panel-body no-pad">
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Cliente</th>
+                <th>Serviço</th>
+                <th>Status</th>
+                <th>Última atualização</th>
+                <th>Histórico</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody id="tabela-servicos-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- modal de atualização de andamento -->
+<div class="modal-overlay" id="modal-atualizar">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3 id="atualizar-titulo">Atualizar serviço</h3>
+      <button class="modal-close" id="fechar-modal-atualizar">✕</button>
+    </div>
+    <form id="form-atualizar">
+      <div class="modal-body">
+        <p class="cell-muted" id="atualizar-cliente" style="margin-bottom:18px;"></p>
+
+        <div class="field">
+          <label for="input-status">Status</label>
+          <select class="input" id="input-status" required>
+            <option value="aguardando">Aguardando</option>
+            <option value="recebido">Recebido</option>
+            <option value="em_analise">Em análise</option>
+            <option value="em_desenvolvimento">Em desenvolvimento</option>
+            <option value="em_revisao">Em revisão</option>
+            <option value="concluido">Concluído</option>
+            <option value="cancelado">Cancelado</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="input-observacao">Observação</label>
+          <textarea class="input" id="input-observacao" placeholder="Descreva o que foi feito nesta atualização..." required></textarea>
+        </div>
+
+        <div class="field" style="margin-bottom:0;">
+          <label>Funcionário responsável</label>
+          <p class="cell-strong" id="input-responsavel" style="margin:0;"></p>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button type="button" class="btn btn-outline" id="cancelar-atualizar" onclick="document.getElementById('modal-atualizar').classList.remove('open')">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Salvar atualização</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- modal de histórico -->
+<div class="modal-overlay" id="modal-historico">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3 id="historico-titulo">Histórico</h3>
+      <button class="modal-close" id="fechar-modal-historico">✕</button>
+    </div>
+    <div class="modal-body" id="historico-conteudo"></div>
+  </div>
+</div>
+
+<script src="js/auth.js"></script>
+<script src="js/funcionario.js"></script>
+</body>
+</html>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel administrativo — GDF</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+<div class="sidebar-backdrop"></div>
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-mark">GDF</span>
+      <span>
+        <span class="brand-name">GDF</span>
+        <span class="brand-sub">Gestão Digital Funcional</span>
+      </span>
+    </div>
+
+    <div class="side-user">
+      <span class="avatar" id="side-avatar">A</span>
+      <div>
+        <div class="u-name" id="side-nome">—</div>
+        <div class="u-role">Administrador</div>
+      </div>
+    </div>
+
+    <nav class="side-nav">
+      <a href="#dashboard-section" class="active"><span class="ico">■</span> Visão geral</a>
+      <a href="#gestao-section"><span class="ico">□</span> Gestão</a>
+    </nav>
+
+    <div class="side-logout">
+      <button data-logout><span class="ico">←</span> Sair</button>
+    </div>
+  </aside>
+
+  <main class="dash-main">
+    <div class="dash-topbar">
+      <button class="mobile-menu-btn" aria-label="Abrir menu">☰</button>
+      <div>
+        <h1>Painel administrativo</h1>
+        <div class="sub">Controle geral de clientes, funcionários e serviços da GDF.</div>
+      </div>
+    </div>
+
+    <div id="dashboard-section">
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-label">Total de clientes</div>
+          <div class="stat-value" id="stat-total-clientes">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Total de funcionários</div>
+          <div class="stat-value" id="stat-total-funcionarios">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Total de serviços</div>
+          <div class="stat-value" id="stat-total-servicos">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Em andamento</div>
+          <div class="stat-value" id="stat-em-andamento">0</div>
+        </div>
+      </div>
+      <div class="stat-grid" style="grid-template-columns:repeat(2,1fr); max-width:520px;">
+        <div class="stat-card">
+          <div class="stat-label">Concluídos</div>
+          <div class="stat-value" id="stat-concluidos">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Aguardando</div>
+          <div class="stat-value" id="stat-aguardando">0</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" id="gestao-section">
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="tab-clientes">Clientes</button>
+        <button class="tab-btn" data-tab="tab-funcionarios">Funcionários</button>
+        <button class="tab-btn" data-tab="tab-servicos">Serviços</button>
+      </div>
+
+      <!-- CLIENTES -->
+      <div class="tab-panel active" id="tab-clientes">
+        <div class="panel-head">
+          <h3>Clientes cadastrados</h3>
+          <div class="toolbar">
+            <div class="search-box"><input type="text" id="busca-cliente" placeholder="Buscar cliente..."></div>
+          </div>
+        </div>
+        <div class="panel-body no-pad">
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr><th>Nome</th><th>Contato</th><th>Serviços</th><th>Status</th><th>Ações</th></tr>
+              </thead>
+              <tbody id="tabela-clientes-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- FUNCIONÁRIOS -->
+      <div class="tab-panel" id="tab-funcionarios">
+        <div class="panel-head">
+          <h3>Funcionários</h3>
+          <div class="toolbar">
+            <div class="search-box"><input type="text" id="busca-funcionario" placeholder="Buscar funcionário..."></div>
+            <button class="btn btn-primary btn-sm" id="btn-novo-funcionario">+ Novo funcionário</button>
+          </div>
+        </div>
+        <div class="panel-body no-pad">
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr><th>Nome</th><th>Contato</th><th>Serviços</th><th>Status</th><th>Ações</th></tr>
+              </thead>
+              <tbody id="tabela-funcionarios-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- SERVIÇOS -->
+      <div class="tab-panel" id="tab-servicos">
+        <div class="panel-head">
+          <h3>Serviços</h3>
+          <div class="toolbar">
+            <div class="search-box"><input type="text" id="busca-servico" placeholder="Buscar cliente ou serviço..."></div>
+            <select class="filter-select" id="filtro-status-servico">
+              <option value="">Todos os status</option>
+              <option value="aguardando">Aguardando</option>
+              <option value="recebido">Recebido</option>
+              <option value="em_analise">Em análise</option>
+              <option value="em_desenvolvimento">Em desenvolvimento</option>
+              <option value="em_revisao">Em revisão</option>
+              <option value="concluido">Concluído</option>
+              <option value="cancelado">Cancelado</option>
+            </select>
+            <button class="btn btn-primary btn-sm" id="btn-novo-servico">+ Novo serviço</button>
+          </div>
+        </div>
+        <div class="panel-body no-pad">
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr><th>Serviço</th><th>Cliente</th><th>Responsável</th><th>Status</th><th>Última atualização</th><th>Ações</th></tr>
+              </thead>
+              <tbody id="tabela-servicos-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- modal funcionário -->
+<div class="modal-overlay" id="modal-funcionario">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3 id="modal-funcionario-titulo">Novo funcionário</h3>
+      <button class="modal-close" id="fechar-modal-funcionario">✕</button>
+    </div>
+    <form id="form-funcionario">
+      <div class="modal-body">
+        <div class="field">
+          <label for="input-func-nome">Nome completo</label>
+          <input class="input" type="text" id="input-func-nome" required>
+        </div>
+        <div class="field">
+          <label for="input-func-email">E-mail</label>
+          <input class="input" type="email" id="input-func-email" required>
+        </div>
+        <div class="field">
+          <label for="input-func-telefone">Telefone</label>
+          <input class="input" type="tel" id="input-func-telefone">
+        </div>
+        <div class="field" style="margin-bottom:0;">
+          <label for="input-func-senha">Senha</label>
+          <input class="input" type="password" id="input-func-senha" placeholder="Senha de acesso">
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button type="button" class="btn btn-outline" onclick="document.getElementById('modal-funcionario').classList.remove('open')">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- modal serviço -->
+<div class="modal-overlay" id="modal-servico">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3 id="modal-servico-titulo">Novo serviço</h3>
+      <button class="modal-close" id="fechar-modal-servico">✕</button>
+    </div>
+    <form id="form-servico">
+      <div class="modal-body">
+        <div class="field">
+          <label for="input-srv-nome">Nome do serviço</label>
+          <input class="input" type="text" id="input-srv-nome" required>
+        </div>
+        <div class="field">
+          <label for="input-srv-descricao">Descrição</label>
+          <textarea class="input" id="input-srv-descricao" required></textarea>
+        </div>
+        <div class="form-grid-2">
+          <div class="field">
+            <label for="input-srv-cliente">Cliente</label>
+            <select class="input" id="input-srv-cliente" required></select>
+          </div>
+          <div class="field">
+            <label for="input-srv-funcionario">Funcionário responsável</label>
+            <select class="input" id="input-srv-funcionario" required></select>
+          </div>
+        </div>
+        <div class="field" style="margin-bottom:0;">
+          <label for="input-srv-status">Status</label>
+          <select class="input" id="input-srv-status" required>
+            <option value="aguardando">Aguardando</option>
+            <option value="recebido">Recebido</option>
+            <option value="em_analise">Em análise</option>
+            <option value="em_desenvolvimento">Em desenvolvimento</option>
+            <option value="em_revisao">Em revisão</option>
+            <option value="concluido">Concluído</option>
+            <option value="cancelado">Cancelado</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button type="button" class="btn btn-outline" onclick="document.getElementById('modal-servico').classList.remove('open')">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Salvar serviço</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- modal histórico -->
+<div class="modal-overlay" id="modal-historico">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3 id="historico-titulo">Histórico</h3>
+      <button class="modal-close" id="fechar-modal-historico">✕</button>
+    </div>
+    <div class="modal-body" id="historico-conteudo"></div>
+  </div>
+</div>
+
+<!-- modal confirmação -->
+<div class="modal-overlay" id="modal-confirmar">
+  <div class="modal-box" style="max-width:400px;">
+    <div class="modal-head">
+      <h3>Confirmar ação</h3>
+      <button class="modal-close" id="fechar-modal-confirmar">✕</button>
+    </div>
+    <div class="modal-body">
+      <p class="confirm-text" id="confirmar-texto"></p>
+    </div>
+    <div class="modal-foot">
+      <button type="button" class="btn btn-outline" id="btn-cancelar-confirmar">Cancelar</button>
+      <button type="button" class="btn btn-danger" id="btn-confirmar-acao">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/auth.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>
